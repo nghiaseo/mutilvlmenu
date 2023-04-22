@@ -1,5 +1,7 @@
 <div class="submenu-trigger-container" *ngIf="!isRootNode">
-  <span class="submenu-trigger-title">{{ trigger }}</span
+  <span class="submenu-trigger-title" (click)="selectItem(code)">{{
+    trigger
+  }}</span
   ><button disableRipple mat-menu-item [matMenuTriggerFor]="menu"></button>
 </div>
 <div *ngIf="isRootNode">
@@ -14,12 +16,17 @@
       mat-menu-item
       [ngClass]="[isExpandable(node.children) ? 'multi-menu-button' : '']">
       <app-mutil-lvl-list
+        [code]="node.code"
         [trigger]="node.title"
         [data]="node.children"
         *ngIf="isExpandable(node.children); else menuItem"></app-mutil-lvl-list>
     </button>
     <ng-template #menuItem>
-      <button disableRipple class="bg-none pl-0" mat-menu-item>
+      <button
+        (click)="selectItem(node.code)"
+        disableRipple
+        class="bg-none pl-0"
+        mat-menu-item>
         {{ node.title }}
       </button>
     </ng-template>
