@@ -1,0 +1,27 @@
+<div class="submenu-trigger-container" *ngIf="!isRootNode">
+  <span class="submenu-trigger-title">{{ trigger }}</span
+  ><button disableRipple mat-menu-item [matMenuTriggerFor]="menu"></button>
+</div>
+<div *ngIf="isRootNode">
+  <button mat-button [matMenuTriggerFor]="menu">
+    {{ trigger }}
+  </button>
+</div>
+<mat-menu #menu="matMenu">
+  <ng-container *ngFor="let node of data; let i = index">
+    <button
+      disableRipple
+      mat-menu-item
+      [ngClass]="[isExpandable(node.children) ? 'multi-menu-button' : '']">
+      <app-mutil-lvl-list
+        [trigger]="node.title"
+        [data]="node.children"
+        *ngIf="isExpandable(node.children); else menuItem"></app-mutil-lvl-list>
+    </button>
+    <ng-template #menuItem>
+      <button disableRipple class="bg-none pl-0" mat-menu-item>
+        {{ node.title }}
+      </button>
+    </ng-template>
+  </ng-container>
+</mat-menu>
