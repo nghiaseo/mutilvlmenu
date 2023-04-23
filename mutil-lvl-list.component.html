@@ -1,8 +1,16 @@
 <div class="submenu-trigger-container" *ngIf="!isRootNode">
-  <span class="submenu-trigger-title" (click)="selectItem(code)">{{
-    trigger
-  }}</span
-  ><button disableRipple mat-menu-item [matMenuTriggerFor]="menu"></button>
+  <span
+    class="submenu-trigger-title"
+    (click)="selectItem(code)"
+    *ngIf="!selectLastChildOnly"
+    >{{ trigger }}</span
+  ><button
+    disableRipple
+    mat-menu-item
+    [matMenuTriggerFor]="menu"
+    [ngClass]="selectLastChildOnly ? 'btnSelectLastchildOnly' : ''">
+    <ng-container *ngIf="selectLastChildOnly">{{ trigger }}</ng-container>
+  </button>
 </div>
 <div *ngIf="isRootNode">
   <button mat-button [matMenuTriggerFor]="menu">
@@ -19,6 +27,7 @@
         [code]="node.code"
         [trigger]="node.title"
         [data]="node.children"
+        [selectLastChildOnly]="selectLastChildOnly"
         *ngIf="isExpandable(node.children); else menuItem"></app-mutil-lvl-list>
     </button>
     <ng-template #menuItem>

@@ -11,11 +11,13 @@ export class MutilLvlListComponent {
   @Input() trigger = "Trigger Menu";
   @Input() isRootNode = false;
   @Input() code = null
+  @Input() selectLastChildOnly = false
   @Output() onSelected = new EventEmitter()
   isExpandable(children): boolean {
     return Array.isArray(children)
   }
   selectItem(data) {
+    console.log(data)
     this.onSelected.emit(data)
   }
 }
